@@ -95,7 +95,7 @@ public class PlayerData : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        ReadDataFromLocalFile();
     }
 
 
@@ -162,14 +162,14 @@ public class PlayerData : MonoBehaviour
 
         
         string serializedItemCollected = JsonConvert.SerializeObject(ItemCollected);
-        HandleDataWithLocalFile(serializedItemCollected);
+        SaveDataToLocalFile(serializedItemCollected);
         Debug.Log($"{serializedItemCollected}");
     }
 
-    void HandleDataWithLocalFile(string data)
+    void SaveDataToLocalFile(string data)
     {
-        
-        
+        File.WriteAllText(FilePath, data);
+        Debug.Log($"{nameof(SaveDataToLocalFile)}");
     }
 
     void ReadDataFromLocalFile()
@@ -184,6 +184,6 @@ public class PlayerData : MonoBehaviour
             ItemCollected = JsonConvert.DeserializeObject<Dictionary<string, int>>(fileContent);
             
         }
-        Debug.Log($"");
+        Debug.Log($"{nameof(ReadDataFromLocalFile)} \n File path {FilePath}");
     }
 }

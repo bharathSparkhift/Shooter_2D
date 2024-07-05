@@ -176,8 +176,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 86564644}
   rectTransform: {fileID: 86564642}
-  forceSpeed: 35
-  disableDelay: 0.5
+  forceSpeed: 15
+  disableDelay: 1.5
 --- !u!50 &86564644
 Rigidbody2D:
   serializedVersion: 4
@@ -342,8 +342,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 104649744}
   rectTransform: {fileID: 104649742}
-  forceSpeed: 35
-  disableDelay: 0.5
+  forceSpeed: 15
+  disableDelay: 1.5
 --- !u!50 &104649744
 Rigidbody2D:
   serializedVersion: 4
@@ -508,8 +508,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 184325043}
   rectTransform: {fileID: 184325041}
-  forceSpeed: 35
-  disableDelay: 0.5
+  forceSpeed: 15
+  disableDelay: 1.5
 --- !u!50 &184325043
 Rigidbody2D:
   serializedVersion: 4
@@ -814,8 +814,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 286066642}
   rectTransform: {fileID: 286066638}
-  forceSpeed: 35
-  disableDelay: 0.5
+  forceSpeed: 15
+  disableDelay: 1.5
 --- !u!50 &286066642
 Rigidbody2D:
   serializedVersion: 4
@@ -2200,7 +2200,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -232}
+  m_AnchoredPosition: {x: 312, y: -357}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1028523814
@@ -2414,7 +2414,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -197, y: -232}
+  m_AnchoredPosition: {x: -33, y: -274}
   m_SizeDelta: {x: 88, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1044092457
@@ -2710,8 +2710,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1169082961}
   rectTransform: {fileID: 1169082959}
-  forceSpeed: 35
-  disableDelay: 0.5
+  forceSpeed: 15
+  disableDelay: 1.5
 --- !u!50 &1169082961
 Rigidbody2D:
   serializedVersion: 4
@@ -3423,8 +3423,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1362609563}
   rectTransform: {fileID: 1362609561}
-  forceSpeed: 35
-  disableDelay: 0.5
+  forceSpeed: 15
+  disableDelay: 1.5
 --- !u!50 &1362609563
 Rigidbody2D:
   serializedVersion: 4
@@ -4027,8 +4027,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1488123383}
   rectTransform: {fileID: 1488123381}
-  forceSpeed: 35
-  disableDelay: 0.5
+  forceSpeed: 15
+  disableDelay: 1.5
 --- !u!50 &1488123383
 Rigidbody2D:
   serializedVersion: 4
@@ -4558,7 +4558,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -96.9, y: 0}
+  m_AnchoredPosition: {x: -96.8999, y: 0}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1811768874
@@ -4878,7 +4878,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -419, y: -232}
+  m_AnchoredPosition: {x: -309, y: -517}
   m_SizeDelta: {x: 88, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1944624703
