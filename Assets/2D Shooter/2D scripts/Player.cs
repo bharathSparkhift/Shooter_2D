@@ -5,8 +5,13 @@ using UnityEngine.InputSystem.Interactions;
 
 namespace shooter
 {
-    public class Player : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+    public class Player : MonoBehaviour, IDragHandler, IPointerUpHandler
     {
+
+
+        public delegate void PlayerDelegate();
+        public static PlayerDelegate OnPlayer;
+
         [SerializeField] RectTransform playerRectTransform;
         [SerializeField] Canvas canvas;
         [SerializeField] RectTransform canvasRectTransform;
@@ -42,8 +47,6 @@ namespace shooter
             
             minYclamp = (0 + playerRectTransform.sizeDelta.y / 2);
             maxYclamp = (canvasRectTransform.rect.height * 0.25f - playerRectTransform.sizeDelta.y/2);
-
-            
         }
 
         private void Update()
@@ -57,11 +60,6 @@ namespace shooter
                     
                 }
             };
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -94,5 +92,7 @@ namespace shooter
         {
             CancelInvoke(nameof(ShootBullet));
         }
+
+
     }
 }

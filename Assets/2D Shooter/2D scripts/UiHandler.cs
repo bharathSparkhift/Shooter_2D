@@ -26,6 +26,7 @@ public class UiHandler : MonoBehaviour
     [SerializeField] Button loginButton;
     [SerializeField] Transform currentCanvas;
     [SerializeField] Transform[] canvas;
+   
 
     PlayerData _playerData;
 
@@ -70,7 +71,6 @@ public class UiHandler : MonoBehaviour
                 currentCanvas.gameObject.SetActive(true);
                 break;
         }
-
     }
 
     /// <summary>
@@ -78,29 +78,11 @@ public class UiHandler : MonoBehaviour
     /// </summary>
     public void LoginOnButtonClick()
     {
-        /*_playerData = new PlayerData();
-        _playerData.login = new PlayerData.Login();
-
-        // Set login details in here
-        _playerData.login.user_name = "bharath";
-        _playerData.login.score = "0";
-        _playerData.login.date_time = DateTime.Now.ToString();
-        _playerData.login.logged_in = "true";*/
-        Debug.Log($"{nameof(LoginOnButtonClick)}");
-        PlayerData.OnPlayerDataCalled?.Invoke(_playerData.login);
+        
     }
 
     public void LogoutOnButtonClick()
     {
-        /*_playerData = new PlayerData();
-        _playerData.login = new PlayerData.Login();
-
-        // Set login details in here
-        _playerData.login.user_name = string.Empty;
-        _playerData.login.score = string.Empty;
-        _playerData.login.date_time = string.Empty;
-        _playerData.login.logged_in = "false";
-        Debug.Log($"{nameof(LogoutOnButtonClick)}");*/
-        PlayerData.OnPlayerDataCalled?.Invoke(_playerData.login);
+        
     }
 }

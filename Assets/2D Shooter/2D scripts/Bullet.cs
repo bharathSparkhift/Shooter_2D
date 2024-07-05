@@ -22,14 +22,21 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log($"{nameof(OnCollisionEnter2D)} \t {collision.gameObject.name}");
+        // Debug.Log($"{nameof(OnCollisionEnter2D)} \t {collision.gameObject.name}");
         DisableGameObject();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // DisableGameObject();
     }
 
     private void OnEnable()
     {
+        
         Vector2 upwardWorldDirection = transform.TransformDirection(transform.up);
         rb.AddForce(upwardWorldDirection * forceSpeed, ForceMode2D.Impulse);
+        rectTransform.localRotation = Quaternion.Euler(0, 0, 0);
         Invoke(nameof(DisableGameObject), disableDelay);
     }
 

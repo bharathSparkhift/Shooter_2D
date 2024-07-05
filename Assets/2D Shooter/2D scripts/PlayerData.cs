@@ -1,17 +1,35 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
+
+
+
+[Serializable]
+public class PlayerDataWrapper
+{
+    public List<CollectItem> CollectItems = new List<CollectItem>();
+}
+
+[Serializable]
+public class CollectItem
+{
+    public string   Name;
+    public int      Count;
+}
+
+
 public class PlayerData : MonoBehaviour
 {
 
-    public delegate void PlayerDataDelegate(PlayerData.Login login);
-    public static PlayerDataDelegate OnPlayerDataCalled;
-
-
+    public delegate void PlayerDataDelegate(string name);
+    public static PlayerDataDelegate OnPlayerData;
 
     [Serializable]
     class Report
@@ -35,13 +53,17 @@ public class PlayerData : MonoBehaviour
         public string logged_in;
     }
 
-
+    public string FilePath => Application.persistentDataPath + "/Shooter2D.json";
 
     public string PlayerUserName => PlayerPrefs.GetString("user_name");
     public string PlayerScore => PlayerPrefs.GetString("score");
     public string PlayerLoginDateTime => PlayerPrefs.GetString("login_date_time");
-
     public string PlayerLoggedIn => PlayerPrefs.GetString("logged_in");
+
+    public PlayerDataWrapper PlayerData_Wrapper { get; private set; }
+    public CollectItem Collect_Item { get; private set; }
+
+    public Dictionary<string, int> ItemCollected = new Dictionary<string, int>();
 
     Report report;
     [HideInInspector]
@@ -53,19 +75,21 @@ public class PlayerData : MonoBehaviour
     {
         report = new Report();
         login = new Login();
+        PlayerData_Wrapper = new PlayerDataWrapper();
+        Collect_Item = new CollectItem();
         
     }
 
     private void OnEnable()
     {
-        OnPlayerDataCalled += UpdatePlayerLogin;
+        OnPlayerData += UpdatePlayerCollection;
     }
 
 
 
     private void OnDisable()
     {
-        OnPlayerDataCalled -= UpdatePlayerLogin;
+        OnPlayerData -= UpdatePlayerCollection;
     }
 
     // Start is called before the first frame update
@@ -75,10 +99,7 @@ public class PlayerData : MonoBehaviour
     }
 
 
-
-
-
-    void UpdatePlayerLogin(Login login)
+    void UpdatePlayerLogin()
     {
         PlayerLoginVerify(login);
         Debug.Log($"<color=green>Player login updated in PlayerPrefs settings.</color>");
@@ -86,9 +107,7 @@ public class PlayerData : MonoBehaviour
 
     void PlayerLoginVerify(Login login)
     {
-
         UpdatePlayerPref(login);
-
     }
 
     void UpdatePlayerPref(Login login)
@@ -98,35 +117,19 @@ public class PlayerData : MonoBehaviour
         {
             if(PlayerPrefs.GetString(PlayerLoggedIn) == "true")
             {
-                // Enable Player canvas
-                /*PlayerPrefs.SetString(PlayerUserName, PlayerPrefs.GetString(PlayerUserName));
-                PlayerPrefs.SetString(PlayerScore, PlayerPrefs.GetString(PlayerScore));
-                PlayerPrefs.SetString(PlayerLoginDateTime, PlayerPrefs.GetString(PlayerLoginDateTime));
-                PlayerPrefs.SetString(PlayerLoggedIn, PlayerPrefs.GetString(PlayerLoggedIn));*/
                 UiHandler.OnUiHandler?.Invoke(1);
                 loginStatus.text = $"<color=green>{PlayerUserName} \n {PlayerScore} \n {PlayerLoginDateTime} \n {PlayerLoggedIn}</color>";
             }
             else if(PlayerPrefs.GetString(PlayerLoggedIn) == "false")
             {
-                // Disable Player canvas
-                /*PlayerPrefs.SetString(PlayerUserName, PlayerPrefs.GetString(PlayerUserName));
-                PlayerPrefs.SetString(PlayerScore, PlayerPrefs.GetString(PlayerScore));
-                PlayerPrefs.SetString(PlayerLoginDateTime, PlayerPrefs.GetString(PlayerLoginDateTime));
-                PlayerPrefs.SetString(PlayerLoggedIn, PlayerPrefs.GetString(PlayerLoggedIn));*/
                 UiHandler.OnUiHandler?.Invoke(0);
                 loginStatus.text = string.Empty;
             }
-            
-            
         }
         else
         {
             loginStatus.text = $"<color=red>Failed to load the player data</color>";
         }
-            
-
-
-        
     }
 
     void UpdatePlayerReport(Login login)
@@ -139,5 +142,48 @@ public class PlayerData : MonoBehaviour
         };
         
         Debug.Log(report.ToString());
+    }
+
+    void UpdatePlayerCollection(string obstacleName)
+    {
+        Collect_Item.Name = obstacleName;
+        Collect_Item.Count += 1;
+        PlayerData_Wrapper.CollectItems.Add(Collect_Item);
+
+        int value;
+        if (!ItemCollected.ContainsKey(obstacleName))
+        {
+            ItemCollected.Add(obstacleName, 0);
+        }
+        
+        ItemCollected.TryGetValue(obstacleName, out value);
+        value += 1;
+        ItemCollected[obstacleName] = value;
+
+        
+        string serializedItemCollected = JsonConvert.SerializeObject(ItemCollected);
+        HandleDataWithLocalFile(serializedItemCollected);
+        Debug.Log($"{serializedItemCollected}");
+    }
+
+    void HandleDataWithLocalFile(string data)
+    {
+        
+        
+    }
+
+    void ReadDataFromLocalFile()
+    {
+        if (!File.Exists(FilePath))
+        {
+            File.Create(FilePath);
+        }
+        string fileContent = File.ReadAllText(FilePath);
+        if (fileContent != null || !string.IsNullOrEmpty(fileContent))
+        {
+            ItemCollected = JsonConvert.DeserializeObject<Dictionary<string, int>>(fileContent);
+            
+        }
+        Debug.Log($"");
     }
 }
