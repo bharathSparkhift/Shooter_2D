@@ -1593,9 +1593,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1267510963}
-        m_TargetAssemblyTypeName: UiHandler, Assembly-CSharp
-        m_MethodName: LoginOnButtonClick
+      - m_Target: {fileID: 1267510964}
+        m_TargetAssemblyTypeName: GoogleSignInHandler, Assembly-CSharp
+        m_MethodName: SignInOnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1267510964}
+        m_TargetAssemblyTypeName: GoogleSignInHandler, Assembly-CSharp
+        m_MethodName: SignInSilentlyOnButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3248,6 +3260,7 @@ GameObject:
   - component: {fileID: 1267510961}
   - component: {fileID: 1267510962}
   - component: {fileID: 1267510963}
+  - component: {fileID: 1267510964}
   m_Layer: 0
   m_Name: '[Application Manager]'
   m_TagString: Untagged
@@ -3307,6 +3320,20 @@ MonoBehaviour:
   - {fileID: 1336515510}
   - {fileID: 367190098}
   - {fileID: 1228359925}
+--- !u!114 &1267510964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267510960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d7530c54651ac4fad3aa33f4ffde6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: {fileID: 492252511}
+  webClientId: 622482298564-rc3aa59ll2qgcatki6ggv47mplodul61.apps.googleusercontent.com
 --- !u!1 &1270013621
 GameObject:
   m_ObjectHideFlags: 0
@@ -5141,9 +5168,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1267510963}
-        m_TargetAssemblyTypeName: UiHandler, Assembly-CSharp
-        m_MethodName: LogoutOnButtonClick
+      - m_Target: {fileID: 1267510964}
+        m_TargetAssemblyTypeName: GoogleSignInHandler, Assembly-CSharp
+        m_MethodName: SignOutOnButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

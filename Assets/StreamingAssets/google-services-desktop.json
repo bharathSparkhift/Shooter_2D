@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "506862426438",
+    "project_id": "d-shooter-edc81",
+    "storage_bucket": "d-shooter-edc81.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:506862426438:android:d4ed2733bb0647611ced47",
+        "android_client_info": {
+          "package_name": "com.indexvault.shooter_2D"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "506862426438-45a9256at41meub80plsvus19lt5s63l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.indexvault.shooter_2D",
+            "certificate_hash": "ed0fc458e9263963f20cf46bcfea61e075f0db4c"
+          }
+        },
+        {
+          "client_id": "506862426438-ga6qdb9jupue5eice3ud3lngp73to802.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxznXgGx-eGQkXD3PbrRKHdz-zOPkpLDE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "506862426438-ga6qdb9jupue5eice3ud3lngp73to802.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
