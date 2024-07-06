@@ -43,11 +43,12 @@ namespace shooter
 
         void Start()
         {
-            minXclamp = -(canvasRectTransform.rect.width - playerRectTransform.sizeDelta.x) / 2;
-            maxXclamp =  (canvasRectTransform.rect.width - playerRectTransform.sizeDelta.x) / 2;
+            minXclamp = -(canvasRectTransform.rect.width - playerRectTransform.sizeDelta.x) / 2.5f;
+            maxXclamp =  (canvasRectTransform.rect.width - playerRectTransform.sizeDelta.x) / 2.5f;
             
-            minYclamp = (0 + playerRectTransform.sizeDelta.y / 2);
-            maxYclamp = (canvasRectTransform.rect.height * 0.25f - playerRectTransform.sizeDelta.y/2);
+            minYclamp = (0 + playerRectTransform.sizeDelta.y);
+            maxYclamp = playerRectTransform.sizeDelta.y * 7;
+            // maxYclamp = (canvasRectTransform.rect.height * 0.25f - playerRectTransform.sizeDelta.y/2);
 
             canvas2dCollider.size = new Vector2(canvasRectTransform.rect.width, 100);
         }
