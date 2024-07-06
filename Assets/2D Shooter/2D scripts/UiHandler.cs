@@ -20,11 +20,15 @@ public class UiHandler : MonoBehaviour
 
     }
 
+    
+
     [HideInInspector]
     public CanvasType Canvas_Type;
 
+    
+
     [SerializeField] Button loginButton;
-    [SerializeField] Transform currentCanvas;
+    [SerializeField] Transform currentCanvasTransform;
     [SerializeField] Transform[] canvas;
    
 
@@ -33,7 +37,7 @@ public class UiHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentCanvas = canvas[0];
+        currentCanvasTransform = canvas[0];
     }
 
     private void OnEnable()
@@ -55,20 +59,20 @@ public class UiHandler : MonoBehaviour
     /// <param name="index"></param>
     void ToggleCanvas(int index)
     {
-        currentCanvas.gameObject.SetActive(false);
+        currentCanvasTransform.gameObject.SetActive(false);
         switch (index)
         {
             case 0: // Login canvas
-                currentCanvas = canvas[0];
-                currentCanvas.gameObject.SetActive(true);
+                currentCanvasTransform = canvas[0];
+                currentCanvasTransform.gameObject.SetActive(true);
                 break;
             case 1: // Player canvas
-                currentCanvas = canvas[1];
-                currentCanvas.gameObject.SetActive(true);
+                currentCanvasTransform = canvas[1];
+                currentCanvasTransform.gameObject.SetActive(true);
                 break; 
             case 2: // Stats canvas
-                currentCanvas = canvas[2];
-                currentCanvas.gameObject.SetActive(true);
+                currentCanvasTransform = canvas[2];
+                currentCanvasTransform.gameObject.SetActive(true);
                 break;
         }
     }

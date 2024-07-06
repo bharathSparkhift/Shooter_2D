@@ -12,6 +12,8 @@ public class ObstacleData : MonoBehaviour
     [SerializeField] private Transform      obstacleParentTransform;
     [SerializeField] private Transform[]    obstacles;
 
+  
+
     #region Monobehaviour callbacks
     private void OnEnable()
     {

@@ -15,6 +15,7 @@ namespace shooter
         [SerializeField] RectTransform playerRectTransform;
         [SerializeField] Canvas canvas;
         [SerializeField] RectTransform canvasRectTransform;
+        [SerializeField] BoxCollider2D canvas2dCollider;
         [SerializeField] float minXclamp;
         [SerializeField] float maxXclamp;
         [SerializeField] float minYclamp;
@@ -47,6 +48,8 @@ namespace shooter
             
             minYclamp = (0 + playerRectTransform.sizeDelta.y / 2);
             maxYclamp = (canvasRectTransform.rect.height * 0.25f - playerRectTransform.sizeDelta.y/2);
+
+            canvas2dCollider.size = new Vector2(canvasRectTransform.rect.width, 100);
         }
 
         private void Update()

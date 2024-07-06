@@ -144,6 +144,11 @@ public class PlayerData : MonoBehaviour
         Debug.Log(report.ToString());
     }
 
+    /// <summary>
+    /// Update Player collected items to the dictionary.
+    /// Save the details in the local json file
+    /// </summary>
+    /// <param name="obstacleName"></param>
     void UpdatePlayerCollection(string obstacleName)
     {
         Collect_Item.Name = obstacleName;
@@ -166,12 +171,20 @@ public class PlayerData : MonoBehaviour
         Debug.Log($"{serializedItemCollected}");
     }
 
+    /// <summary>
+    /// Save the data to the local JSON file.
+    /// </summary>
+    /// <param name="data"></param>
     void SaveDataToLocalFile(string data)
     {
         File.WriteAllText(FilePath, data);
         Debug.Log($"{nameof(SaveDataToLocalFile)}");
     }
 
+
+    /// <summary>
+    /// Read the data from the Local JSON file.
+    /// </summary>
     void ReadDataFromLocalFile()
     {
         if (!File.Exists(FilePath))

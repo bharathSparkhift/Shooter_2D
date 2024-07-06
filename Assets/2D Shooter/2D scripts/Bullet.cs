@@ -22,13 +22,27 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Debug.Log($"{nameof(OnCollisionEnter2D)} \t {collision.gameObject.name}");
         DisableGameObject();
+        if (collision.collider.tag == "Obstacle")
+        {
+            
+            // Debug.Log($"{nameof(OnCollisionEnter2D)} \t {collision.gameObject.name}");
+        }
+        
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Game Canvas")
+        {
+            // DisableGameObject();
+            // Debug.Log($"{nameof(OnCollisionEnter2D)} \t {collision.gameObject.name}");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // DisableGameObject();
+
     }
 
     private void OnEnable()
@@ -37,7 +51,7 @@ public class Bullet : MonoBehaviour
         Vector2 upwardWorldDirection = transform.TransformDirection(transform.up);
         rb.AddForce(upwardWorldDirection * forceSpeed, ForceMode2D.Impulse);
         rectTransform.localRotation = Quaternion.Euler(0, 0, 0);
-        Invoke(nameof(DisableGameObject), disableDelay);
+        // Invoke(nameof(DisableGameObject), disableDelay);
     }
 
     void DisableGameObject()

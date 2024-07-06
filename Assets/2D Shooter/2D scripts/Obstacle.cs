@@ -17,14 +17,29 @@ public class Obstacle : MonoBehaviour
 
 
     [field : SerializeField] public Type ObstacleType { get; private set; }
-
+    /// <summary>
+    /// Game canvas rect transform.
+    /// </summary>
+    [SerializeField] RectTransform gameCanvasRectTransform;
+    /// <summary>
+    /// Current object Rect transform
+    /// </summary>
+    [SerializeField] RectTransform rectTransform;
     [SerializeField] int hitCount = 0;
     [SerializeField] int maxHitCount = 5;
+    [SerializeField] float fallingSpeed = .25f;
     [SerializeField] Image image;
-    [SerializeField] float maxReachPoint;
+    [SerializeField] bool enableGravity;
 
+    GameManager _gameManager;
 
     #region Monobehaviour callbacks
+
+    private void Awake()
+    {
+        _gameManager = new GameManager();
+    }
+
     void Start()
     {
         
@@ -32,9 +47,9 @@ public class Obstacle : MonoBehaviour
 
     private void OnEnable()
     {
-        
-    }
+        ResetPosition();
 
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -66,15 +81,22 @@ public class Obstacle : MonoBehaviour
                 hitCount = 0;
                 DisableObject();
                 image.color = Color.white;
-
                 break;
         }
-        // Debug.Log($"{nameof(OnCollisionEnter2D)} \t {collision.gameObject.name}");
+        
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        
+        //DisableObject();
+    }
+
+    private void Update()
+    {
+        if(enableGravity)
+        {
+            rectTransform.anchoredPosition += new Vector2(0, -0.25f); 
+        }
     }
     #endregion
 
@@ -82,7 +104,13 @@ public class Obstacle : MonoBehaviour
     void DisableObject()
     {
         PlayerData.OnPlayerData?.Invoke(ObstacleType.ToString());
-        // this.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
+        
+    }
+
+    void ResetPosition()
+    {
+        rectTransform.anchoredPosition = new Vector2(Random.Range(-490f, 490f), 184f);
     }
 
 }
