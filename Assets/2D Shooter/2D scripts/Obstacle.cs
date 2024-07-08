@@ -27,7 +27,8 @@ public class Obstacle : MonoBehaviour
     [SerializeField] RectTransform rectTransform;
     [SerializeField] int hitCount = 0;
     [SerializeField] int maxHitCount = 5;
-    [SerializeField] float fallingSpeed = .25f;
+    [SerializeField] float fallingSpeed = 2f;
+    [SerializeField] float initialXposition;
     [SerializeField] Image image;
     [SerializeField] bool enableGravity;
 
@@ -42,12 +43,13 @@ public class Obstacle : MonoBehaviour
 
     void Start()
     {
-        
+        initialXposition = rectTransform.anchoredPosition.x;
     }
 
     private void OnEnable()
     {
-        ResetPosition();
+        // ResetPosition();
+        // initialXposition = rectTransform.anchoredPosition.x;
 
     }
 
@@ -88,14 +90,14 @@ public class Obstacle : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        //DisableObject();
+        
     }
 
     private void Update()
     {
         if(enableGravity)
         {
-            rectTransform.anchoredPosition += new Vector2(0, -0.25f); 
+            rectTransform.anchoredPosition += new Vector2(0, -Time.deltaTime * fallingSpeed); 
         }
     }
     #endregion
@@ -104,13 +106,14 @@ public class Obstacle : MonoBehaviour
     void DisableObject()
     {
         PlayerData.OnPlayerData?.Invoke(ObstacleType.ToString());
-        this.gameObject.SetActive(false);
+        // this.gameObject.SetActive(false);
+        rectTransform.anchoredPosition = new Vector2(initialXposition, 0);
         
     }
 
     void ResetPosition()
     {
-        rectTransform.anchoredPosition = new Vector2(Random.Range(-490f, 490f), 184f);
+        // rectTransform.anchoredPosition = new Vector2(Random.Range(-490f, 490f), 0);
     }
 
 }
