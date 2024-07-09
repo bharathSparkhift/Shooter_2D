@@ -36,11 +36,11 @@ public class PlayerData : MonoBehaviour
     {
         public string user_name;
         public string score;
-        public string play_date_time;
-
+        public string play_time;
+        public Dictionary<string, int> ItemCollected = new Dictionary<string, int>();
         public override string ToString()
         {
-            return $"user name {user_name} \n score {score} \n play date time {play_date_time}";
+            return $"user name {user_name} \n score {score} \n play date time {play_time}";
         }
     }
 
@@ -51,10 +51,10 @@ public class PlayerData : MonoBehaviour
         public string score;
         public string date_time;
         public string logged_in;
+        
     }
 
     public string FilePath => Application.persistentDataPath + "/Shooter2D.json";
-
     public string PlayerUserName => PlayerPrefs.GetString("user_name");
     public string PlayerScore => PlayerPrefs.GetString("score");
     public string PlayerLoginDateTime => PlayerPrefs.GetString("login_date_time");
@@ -63,21 +63,24 @@ public class PlayerData : MonoBehaviour
     public PlayerDataWrapper PlayerData_Wrapper { get; private set; }
     public CollectItem Collect_Item { get; private set; }
 
-    public Dictionary<string, int> ItemCollected = new Dictionary<string, int>();
+    
 
     Report report;
+
     [HideInInspector]
     public Login login;
 
     [SerializeField] TMP_Text loginStatus;
 
+    string _reportContent;
+
     private void Awake()
     {
         report = new Report();
         login = new Login();
+
         PlayerData_Wrapper = new PlayerDataWrapper();
         Collect_Item = new CollectItem();
-        
     }
 
     private void OnEnable()
@@ -95,52 +98,16 @@ public class PlayerData : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ReadDataFromLocalFile();
+        report = ReadDataFromLocalFile();
+        Debug.Log($"File path \t {FilePath}");
     }
 
-
-    void UpdatePlayerLogin()
-    {
-        PlayerLoginVerify(login);
-        Debug.Log($"<color=green>Player login updated in PlayerPrefs settings.</color>");
-    }
-
-    void PlayerLoginVerify(Login login)
-    {
-        UpdatePlayerPref(login);
-    }
-
-    void UpdatePlayerPref(Login login)
-    {
-        
-        if (PlayerPrefs.HasKey(PlayerUserName) && PlayerPrefs.HasKey(PlayerScore) && PlayerPrefs.HasKey(PlayerLoginDateTime) && PlayerPrefs.HasKey(PlayerLoggedIn))
-        {
-            if(PlayerPrefs.GetString(PlayerLoggedIn) == "true")
-            {
-                UiHandler.OnUiHandler?.Invoke(1);
-                loginStatus.text = $"<color=green>{PlayerUserName} \n {PlayerScore} \n {PlayerLoginDateTime} \n {PlayerLoggedIn}</color>";
-            }
-            else if(PlayerPrefs.GetString(PlayerLoggedIn) == "false")
-            {
-                UiHandler.OnUiHandler?.Invoke(0);
-                loginStatus.text = string.Empty;
-            }
-        }
-        else
-        {
-            loginStatus.text = $"<color=red>Failed to load the player data</color>";
-        }
-    }
 
     void UpdatePlayerReport(Login login)
     {
-        report = new Report()
-        {
-            user_name = login.user_name,
-            score = login.score,
-            play_date_time = login.date_time
-        };
-        
+        report = new Report();
+        report.user_name = login.user_name;
+        report.play_time = DateTime.Now.ToString();
         Debug.Log(report.ToString());
     }
 
@@ -155,29 +122,30 @@ public class PlayerData : MonoBehaviour
         Collect_Item.Count += 1;
         PlayerData_Wrapper.CollectItems.Add(Collect_Item);
 
-        int value;
-        if (!ItemCollected.ContainsKey(obstacleName))
+        int value = 0;
+        if (!report.ItemCollected.ContainsKey(obstacleName))
         {
-            ItemCollected.Add(obstacleName, 0);
+            report.ItemCollected.Add(obstacleName, 0);
         }
         
-        ItemCollected.TryGetValue(obstacleName, out value);
+        report.ItemCollected.TryGetValue(obstacleName, out value);
         value += 1;
-        ItemCollected[obstacleName] = value;
+        report.ItemCollected[obstacleName] = value;
 
         
-        string serializedItemCollected = JsonConvert.SerializeObject(ItemCollected);
-        SaveDataToLocalFile(serializedItemCollected);
-        Debug.Log($"{serializedItemCollected}");
+        _reportContent = JsonConvert.SerializeObject(report); // report.
+        SaveDataToLocalFile();
+        Debug.Log($"");
     }
 
     /// <summary>
     /// Save the data to the local JSON file.
     /// </summary>
     /// <param name="data"></param>
-    void SaveDataToLocalFile(string data)
+    void SaveDataToLocalFile()
     {
-        File.WriteAllText(FilePath, data);
+
+        File.WriteAllText(FilePath, _reportContent);
         Debug.Log($"{nameof(SaveDataToLocalFile)}");
     }
 
@@ -185,18 +153,66 @@ public class PlayerData : MonoBehaviour
     /// <summary>
     /// Read the data from the Local JSON file.
     /// </summary>
-    void ReadDataFromLocalFile()
+    Report ReadDataFromLocalFile()
     {
         if (!File.Exists(FilePath))
         {
-            File.Create(FilePath);
+            // Initialize a new report
+            report = new Report
+            {
+                user_name = string.Empty,
+                score = "0",
+                play_time = string.Empty,
+                ItemCollected = new Dictionary<string, int>
+            {
+                { Obstacle.Type.square.ToString(), 0 },
+                { Obstacle.Type.circle.ToString(), 0 },
+                { Obstacle.Type.triangle.ToString(), 0 },
+                { Obstacle.Type.diamond.ToString(), 0 }
+            }
+            };
+
+            _reportContent = JsonConvert.SerializeObject(report);
+
+            try
+            {
+                // Create the file and write initial data
+                using (FileStream fileStream = File.Create(FilePath))
+                {
+                    using (StreamWriter writer = new StreamWriter(fileStream))
+                    {
+                        writer.Write(_reportContent);
+                    }
+                }
+            }
+            catch (IOException ex)
+            {
+                Debug.LogError("IOException: " + ex.Message);
+            }
+
+            // Invoke SaveDataToLocalFile to ensure data is saved (if needed)
+            Invoke(nameof(SaveDataToLocalFile), 1f);
         }
-        string fileContent = File.ReadAllText(FilePath);
-        if (fileContent != null || !string.IsNullOrEmpty(fileContent))
+        else
         {
-            ItemCollected = JsonConvert.DeserializeObject<Dictionary<string, int>>(fileContent);
-            
+            try
+            {
+                // Read data from the existing file
+                string fileContent = File.ReadAllText(FilePath);
+                if (!string.IsNullOrEmpty(fileContent))
+                {
+                    report = JsonConvert.DeserializeObject<Report>(fileContent);
+                }
+            }
+            catch (IOException ex)
+            {
+                Debug.LogError("IOException: " + ex.Message);
+            }
+
+            Debug.Log($"{nameof(ReadDataFromLocalFile)} \n File path {FilePath}");
         }
-        Debug.Log($"{nameof(ReadDataFromLocalFile)} \n File path {FilePath}");
+
+        return report;
     }
+
 }
