@@ -8,6 +8,7 @@ TagManager:
   - Game Canvas
   - Bullet
   - Top Panel
+  - Bottom Panel
   layers:
   - Default
   - TransparentFX

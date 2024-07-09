@@ -19,7 +19,7 @@ public class TopPanel : MonoBehaviour
 
     void ToggleObstacles()
     {
-        ObstacleData.OnObstacleData?.Invoke();
+        // ObstacleData.OnObstacleData?.Invoke();
         Debug.Log($"{nameof(TopPanel)} \t {nameof(ToggleObstacles)}");
     }
 

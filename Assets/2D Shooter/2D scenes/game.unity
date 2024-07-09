@@ -897,15 +897,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 345180686}
+  - component: {fileID: 345180689}
   - component: {fileID: 345180687}
   - component: {fileID: 345180688}
   m_Layer: 9
   m_Name: Bottom Panel
-  m_TagString: Untagged
+  m_TagString: Bottom Panel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &345180686
 RectTransform:
   m_ObjectHideFlags: 0
@@ -954,7 +955,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -50}
@@ -984,6 +985,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameCanvas: {fileID: 367190098}
   boxCollider2D: {fileID: 345180687}
+--- !u!50 &345180689
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345180685}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &348937084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2900,7 +2928,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1028523813
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2917,7 +2945,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 166, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1028523814
@@ -3020,7 +3048,7 @@ MonoBehaviour:
   rectTransform: {fileID: 1028523813}
   hitCount: 0
   maxHitCount: 5
-  fallingSpeed: 150
+  fallingSpeed: 175
   initialXposition: 0
   image: {fileID: 1028523814}
   enableGravity: 1
@@ -3156,7 +3184,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 382, y: 0}
+  m_AnchoredPosition: {x: 218, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1044092457
@@ -3176,7 +3204,7 @@ MonoBehaviour:
   rectTransform: {fileID: 1044092456}
   hitCount: 0
   maxHitCount: 5
-  fallingSpeed: 150
+  fallingSpeed: 175
   initialXposition: 0
   image: {fileID: 1044092459}
   enableGravity: 1
@@ -3320,7 +3348,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -166, y: 0}
+  m_AnchoredPosition: {x: -332, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1152048647
@@ -3340,7 +3368,7 @@ MonoBehaviour:
   rectTransform: {fileID: 1152048646}
   hitCount: 0
   maxHitCount: 5
-  fallingSpeed: 150
+  fallingSpeed: 175
   initialXposition: 0
   image: {fileID: 1152048649}
   enableGravity: 1
@@ -5571,7 +5599,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -164, y: 0}
   m_SizeDelta: {x: 88, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1944624703
@@ -5591,7 +5619,7 @@ MonoBehaviour:
   rectTransform: {fileID: 1944624702}
   hitCount: 0
   maxHitCount: 5
-  fallingSpeed: 150
+  fallingSpeed: 175
   initialXposition: 0
   image: {fileID: 1944624705}
   enableGravity: 1
@@ -5916,7 +5944,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd5d0c70e89c20f42948cbfd44d41337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacleParentTransform: {fileID: 367190098}
+  gameCanvas: {fileID: 367190098}
+  delay: 4
   obstaclePositionAvailable: 01010101
   obstacles:
   - {fileID: 1028523813}

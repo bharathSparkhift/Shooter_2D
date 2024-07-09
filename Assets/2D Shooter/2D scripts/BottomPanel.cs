@@ -14,6 +14,11 @@ public class BottomPanel : MonoBehaviour
         boxCollider2D.size = new Vector2(gameCanvas.rect.size.x, 100);
     }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        // ObstacleData.OnObstacleData?.Invoke();
+    }
 
-    
+
+
 }

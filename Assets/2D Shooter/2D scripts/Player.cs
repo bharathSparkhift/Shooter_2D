@@ -46,7 +46,7 @@ namespace shooter
             minXclamp = -(canvasRectTransform.rect.width - playerRectTransform.sizeDelta.x) / 2f;
             maxXclamp =  (canvasRectTransform.rect.width - playerRectTransform.sizeDelta.x) / 2f;
             
-            minYclamp = (0 + playerRectTransform.sizeDelta.y);
+            minYclamp = (0 + playerRectTransform.sizeDelta.y/2);
             maxYclamp = playerRectTransform.sizeDelta.y * 7;
             // maxYclamp = (canvasRectTransform.rect.height * 0.25f - playerRectTransform.sizeDelta.y/2);
 

@@ -55,6 +55,9 @@ public class Obstacle : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.collider.tag == "Bottom Panel")
+            return;
+
 
         hitCount++;
         switch (hitCount)
@@ -90,12 +93,12 @@ public class Obstacle : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        
+        // rectTransform.anchoredPosition = new Vector2(initialXposition, 0);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        DisableObject();
+        // DisableObject();
 
     }
 
@@ -104,6 +107,12 @@ public class Obstacle : MonoBehaviour
         if(enableGravity)
         {
             rectTransform.anchoredPosition += new Vector2(0, -Time.deltaTime * fallingSpeed); 
+            if(rectTransform.anchoredPosition.y < -gameCanvasRectTransform.sizeDelta.y-100 )
+            {
+                // rectTransform.anchoredPosition = new Vector2(initialXposition, 0);
+                rectTransform.anchoredPosition = new Vector2(Random.Range((-gameCanvasRectTransform.sizeDelta.x / 2 + rectTransform.sizeDelta.x / 3), gameCanvasRectTransform.sizeDelta.x / 2 - rectTransform.sizeDelta.x), 0);
+            }
+            
         }
     }
     #endregion
@@ -113,8 +122,8 @@ public class Obstacle : MonoBehaviour
     {
         PlayerData.OnPlayerData?.Invoke(ObstacleType.ToString());
         // this.gameObject.SetActive(false);
-        rectTransform.anchoredPosition = new Vector2(initialXposition, 0);
-        
+        rectTransform.anchoredPosition = new Vector2(Random.Range((-gameCanvasRectTransform.sizeDelta.x / 2 + rectTransform.sizeDelta.x / 3), gameCanvasRectTransform.sizeDelta.x / 2 - rectTransform.sizeDelta.x), 0);
+
     }
 
     void ResetPosition()

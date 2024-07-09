@@ -5,11 +5,12 @@ using UnityEngine;
 public class ObstacleData : MonoBehaviour
 {
 
-    public delegate void ObstacleDataDelegate(); // Transform transform
+    public delegate void ObstacleDataDelegate(); 
     public static ObstacleDataDelegate OnObstacleData;
 
 
-    [SerializeField] private Transform          obstacleParentTransform;
+    [SerializeField] private RectTransform      gameCanvas;
+    [SerializeField] private float              delay;
     [SerializeField] private bool[]             obstaclePositionAvailable = new bool[] { true, true, true, true };
     [SerializeField] private RectTransform[]    obstacles;
 
@@ -29,22 +30,12 @@ public class ObstacleData : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        InvokeRepeating(nameof(EnableObstacle), 0, 2);
     }
 
     private void Update()
     {
-        // Check overlapping between obstaclePosition[0] and obstacles[0]
-        // bool overlapping = AreRectTransformsOverlapping(obstaclePosition[0], obstacles[0]);
-        /*if (overlapping)
-        {
-
-        }
-        else
-        {
-
-        }
-        Debug.Log($"Overlapping: {overlapping}");*/
+  
 
     }
     #endregion
@@ -77,12 +68,14 @@ public class ObstacleData : MonoBehaviour
     /// </summary>
     void EnableObstacle()
     {
-        foreach(Transform obstacle in obstacles)
+        foreach(RectTransform obstacle in obstacles)
         {
             if(!obstacle.gameObject.activeInHierarchy)
             {
                 obstacle.gameObject.SetActive(true);
+                // obstacle.anchoredPosition = new Vector2(Random.Range(-(gameCanvas.sizeDelta.x / 2 + obstacle.sizeDelta.x / 2),gameCanvas.sizeDelta.x/2 + obstacle.sizeDelta.x/2),0);
                 break;
+                
             }
         }
     }
