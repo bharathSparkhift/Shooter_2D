@@ -1,29 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class StartSceneManager : MonoBehaviour
 {
+    private DateTime _initialTime;
 
-    public enum DifficultLevel
-    {
-        Easy,
-        Medium,
-        Hard
-    }
-
-    /// <summary>
-    /// Defines the difficult level of the game.
-    /// </summary>
-    [field:SerializeField] public DifficultLevel Difficult_Level { get; private set; }
-
-    public DifficultLevel GetDifficultLevel => Difficult_Level;
-
-    DateTime _initialTime;
-
-    #region Monobehaviour callbacks
+    // Start is called before the first frame update
     void Start()
     {
         
@@ -35,19 +21,15 @@ public class GameManager : MonoBehaviour
         LogHandler.OnLogHandler?.Invoke($"scene {SceneManager.GetActiveScene().name.ToString()} \t Opened at {DateTime.Now}");
     }
 
-
-    #endregion
-
     /// <summary>
-    /// Load start scene on button click
+    /// Load game scene on button click
     /// </summary>
-    public void LoadStartScene()
+    public void EnterGameScene()
     {
         var timeSpent = DateTime.Now - _initialTime;
         Debug.Log($"Time spent {timeSpent}");
         LogHandler.OnLogHandler?.Invoke($"Time spent in {SceneManager.GetActiveScene().name.ToString()} scene {timeSpent.ToString()}");
-        SceneManager.LoadSceneAsync(1);
+        AsyncOperation asyncOperation  = SceneManager.LoadSceneAsync(2);
+        
     }
-
-
 }

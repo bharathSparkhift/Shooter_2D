@@ -43,6 +43,7 @@ public class Bullet : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+
     private void Update()
     {
         if(rectTransform.anchoredPosition.x < -gameCanvas.sizeDelta.x/2 || rectTransform.anchoredPosition.x > gameCanvas.sizeDelta.x / 2)

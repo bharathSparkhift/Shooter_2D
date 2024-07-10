@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/2D Shooter/2D scenes/manager.unity
+    guid: bd4fce76ad996c746ac130cc45c9ef59
+  - enabled: 1
     path: Assets/2D Shooter/2D scenes/start.unity
     guid: f9d42d52fd1c89f43befff61caf105fa
   - enabled: 1
