@@ -7,6 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class StartSceneManager : MonoBehaviour
 {
+
+    [SerializeField] string openURL = "https://google.com";
+    [SerializeField] Animation redBoxAnimation;
+
     private DateTime _initialTime;
 
     // Start is called before the first frame update
@@ -19,6 +23,7 @@ public class StartSceneManager : MonoBehaviour
     {
         _initialTime = DateTime.Now;
         LogHandler.OnLogHandler?.Invoke($"scene {SceneManager.GetActiveScene().name.ToString()} \t Opened at {DateTime.Now}");
+        redBoxAnimation.Play();
     }
 
     /// <summary>
@@ -32,4 +37,13 @@ public class StartSceneManager : MonoBehaviour
         AsyncOperation asyncOperation  = SceneManager.LoadSceneAsync(2);
         
     }
+
+    /// <summary>
+    /// Open browser on button click
+    /// </summary>
+    public void OpenUrlOnButtonClick()
+    {
+        Application.OpenURL(openURL);   
+    }
+
 }
