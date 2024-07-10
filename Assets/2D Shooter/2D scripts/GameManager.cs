@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -48,6 +49,22 @@ public class GameManager : MonoBehaviour
         LogHandler.OnLogHandler?.Invoke($"Time spent in {SceneManager.GetActiveScene().name.ToString()} scene {timeSpent.ToString()}");
         SceneManager.LoadSceneAsync(1);
     }
+
+    public void PauseGame()
+    {
+        if(Time.timeScale != 0)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+        Debug.Log($"{nameof(PauseGame)}");
+        
+    }
+
+    
 
 
 }
