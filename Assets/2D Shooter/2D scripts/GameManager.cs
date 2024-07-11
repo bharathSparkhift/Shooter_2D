@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     {
         var timeSpent = DateTime.Now - _initialTime;
         Debug.Log($"Time spent {timeSpent}");
-        LogHandler.OnLogHandler?.Invoke($"Time spent in {SceneManager.GetActiveScene().name.ToString()} scene {timeSpent.ToString()}");
+        LogHandler.OnLogHandler?.Invoke($"Time spent in {SceneManager.GetActiveScene().name.ToString()} scene for about {timeSpent.ToString()} on {DateTime.Now}");
         SceneManager.LoadSceneAsync(1);
     }
 
