@@ -34,14 +34,22 @@ public class PlayerData : MonoBehaviour
     [Serializable]
     class Report
     {
-        public string user_name;
-        public string score;
-        public string play_time;
+        public string UserName;
+        public string Score;
+        public string PlayTime;
+        public string StartDateTime;
+        public string EndDateTime;
         public Dictionary<string, int> ItemCollected = new Dictionary<string, int>();
         public override string ToString()
         {
-            return $"user name {user_name} \n score {score} \n play date time {play_time}";
+            return $"score {Score} \n start date time {StartDateTime} \n play date time {PlayTime}";
         }
+    }
+
+    [Serializable]
+    class Data
+    {
+        
     }
 
     [Serializable]
@@ -66,6 +74,7 @@ public class PlayerData : MonoBehaviour
     
 
     Report report;
+    Data data;
 
     [HideInInspector]
     public Login login;
@@ -78,6 +87,7 @@ public class PlayerData : MonoBehaviour
     {
         report = new Report();
         login = new Login();
+        data = new Data();
 
         PlayerData_Wrapper = new PlayerDataWrapper();
         Collect_Item = new CollectItem();
@@ -86,6 +96,7 @@ public class PlayerData : MonoBehaviour
     private void OnEnable()
     {
         OnPlayerData += UpdatePlayerCollection;
+        
     }
 
 
@@ -93,12 +104,16 @@ public class PlayerData : MonoBehaviour
     private void OnDisable()
     {
         OnPlayerData -= UpdatePlayerCollection;
+        // report.EndDateTime = DateTime.Now.ToString();
     }
+
+   
 
     // Start is called before the first frame update
     void Start()
     {
         report = ReadDataFromLocalFile();
+        report.StartDateTime = DateTime.Now.ToString();
         Debug.Log($"File path \t {FilePath}");
     }
 
@@ -106,8 +121,8 @@ public class PlayerData : MonoBehaviour
     void UpdatePlayerReport(Login login)
     {
         report = new Report();
-        report.user_name = login.user_name;
-        report.play_time = DateTime.Now.ToString();
+        report.UserName = login.user_name;
+        // report.play_time = DateTime.Now.ToString();
         Debug.Log(report.ToString());
     }
 
@@ -132,10 +147,10 @@ public class PlayerData : MonoBehaviour
         value += 1;
         report.ItemCollected[obstacleName] = value;
 
-        
         _reportContent = JsonConvert.SerializeObject(report); // report.
         SaveDataToLocalFile();
         Debug.Log($"");
+
     }
 
     /// <summary>
@@ -160,9 +175,10 @@ public class PlayerData : MonoBehaviour
             // Initialize a new report
             report = new Report
             {
-                user_name = string.Empty,
-                score = "0",
-                play_time = string.Empty,
+                UserName = string.Empty,
+                Score = "0",
+                PlayTime = string.Empty,
+                StartDateTime = string.Empty,
                 ItemCollected = new Dictionary<string, int>
             {
                 { Obstacle.Type.square.ToString(), 0 },
