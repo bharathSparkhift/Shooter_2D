@@ -11,5 +11,7 @@ public class ManagerHandler : MonoBehaviour
         SceneManager.LoadSceneAsync(1);    
     }
 
+
+
     
 }

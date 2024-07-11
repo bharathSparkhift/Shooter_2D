@@ -7,10 +7,6 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-
-
-
-
 [Serializable]
 public class PlayerDataWrapper
 {
@@ -47,19 +43,12 @@ public class PlayerData : MonoBehaviour
     }
 
     [Serializable]
-    class Data
-    {
-        
-    }
-
-    [Serializable]
     public class Login
     {
         public string user_name;
         public string score;
         public string date_time;
         public string logged_in;
-        
     }
 
     public string FilePath => Application.persistentDataPath + "/Shooter2D.json";
@@ -74,29 +63,22 @@ public class PlayerData : MonoBehaviour
     
 
     Report report;
-    Data data;
 
     [HideInInspector]
     public Login login;
 
-    [SerializeField] TMP_Text loginStatus;
+    // s[SerializeField] TMP_Text loginStatus;
 
     string _reportContent;
 
     private void Awake()
     {
-        report = new Report();
-        login = new Login();
-        data = new Data();
-
-        PlayerData_Wrapper = new PlayerDataWrapper();
-        Collect_Item = new CollectItem();
+        
     }
 
     private void OnEnable()
     {
         OnPlayerData += UpdatePlayerCollection;
-        
     }
 
 
@@ -104,7 +86,6 @@ public class PlayerData : MonoBehaviour
     private void OnDisable()
     {
         OnPlayerData -= UpdatePlayerCollection;
-        // report.EndDateTime = DateTime.Now.ToString();
     }
 
    
@@ -112,18 +93,13 @@ public class PlayerData : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        report = new Report();
+        login = new Login();
+        PlayerData_Wrapper = new PlayerDataWrapper();
+        Collect_Item = new CollectItem();
         report = ReadDataFromLocalFile();
         report.StartDateTime = DateTime.Now.ToString();
         Debug.Log($"File path \t {FilePath}");
-    }
-
-
-    void UpdatePlayerReport(Login login)
-    {
-        report = new Report();
-        report.UserName = login.user_name;
-        // report.play_time = DateTime.Now.ToString();
-        Debug.Log(report.ToString());
     }
 
     /// <summary>
@@ -150,7 +126,6 @@ public class PlayerData : MonoBehaviour
         _reportContent = JsonConvert.SerializeObject(report); // report.
         SaveDataToLocalFile();
         Debug.Log($"");
-
     }
 
     /// <summary>
@@ -159,7 +134,6 @@ public class PlayerData : MonoBehaviour
     /// <param name="data"></param>
     void SaveDataToLocalFile()
     {
-
         File.WriteAllText(FilePath, _reportContent);
         Debug.Log($"{nameof(SaveDataToLocalFile)}");
     }
@@ -187,9 +161,7 @@ public class PlayerData : MonoBehaviour
                 { Obstacle.Type.diamond.ToString(), 0 }
             }
             };
-
             _reportContent = JsonConvert.SerializeObject(report);
-
             try
             {
                 // Create the file and write initial data
@@ -205,8 +177,6 @@ public class PlayerData : MonoBehaviour
             {
                 Debug.LogError("IOException: " + ex.Message);
             }
-
-            // Invoke SaveDataToLocalFile to ensure data is saved (if needed)
             Invoke(nameof(SaveDataToLocalFile), 1f);
         }
         else
@@ -224,11 +194,17 @@ public class PlayerData : MonoBehaviour
             {
                 Debug.LogError("IOException: " + ex.Message);
             }
-
             Debug.Log($"{nameof(ReadDataFromLocalFile)} \n File path {FilePath}");
         }
-
         return report;
+    }
+
+    public void LoginOnButtonClick(string username)
+    {
+        report = ReadDataFromLocalFile();
+        report.UserName = username;
+        SaveDataToLocalFile();
+        StartSceneManager.OnStartSceneManager?.Invoke();
     }
 
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,10 +9,16 @@ using UnityEngine.SceneManagement;
 public class StartSceneManager : MonoBehaviour
 {
 
+    public delegate void StartSceneManagerDelegate();
+    public static StartSceneManagerDelegate OnStartSceneManager;
+
     [SerializeField] string openURL = "https://google.com";
     [SerializeField] Animation redBoxAnimation;
 
     private DateTime _initialTime;
+
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +31,12 @@ public class StartSceneManager : MonoBehaviour
         _initialTime = DateTime.Now;
         LogHandler.OnLogHandler?.Invoke($"scene {SceneManager.GetActiveScene().name.ToString()} \t Opened at {DateTime.Now}");
         redBoxAnimation.Play();
+        OnStartSceneManager += SwitchGameScene;
+    }
+
+    private void OnDisable()
+    {
+        OnStartSceneManager -= SwitchGameScene;
     }
 
     /// <summary>
@@ -34,8 +47,7 @@ public class StartSceneManager : MonoBehaviour
         var timeSpent = DateTime.Now - _initialTime;
         Debug.Log($"Time spent {timeSpent}");
         LogHandler.OnLogHandler?.Invoke($"Time spent in {SceneManager.GetActiveScene().name.ToString()} scene {timeSpent.ToString()}");
-        AsyncOperation asyncOperation  = SceneManager.LoadSceneAsync(2);
-        
+        // SceneManager.LoadSceneAsync(2);
     }
 
     /// <summary>
@@ -44,6 +56,13 @@ public class StartSceneManager : MonoBehaviour
     public void OpenUrlOnButtonClick()
     {
         Application.OpenURL(openURL);   
+    }
+
+    async void SwitchGameScene()
+    {
+        await Task.Delay(2000);
+        SceneManager.LoadSceneAsync(2);
+        Debug.Log($"<color=green>switching to the game scene...</color>");
     }
 
 }

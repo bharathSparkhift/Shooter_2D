@@ -5181,11 +5181,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1267510961}
-  - component: {fileID: 1267510962}
   - component: {fileID: 1267510963}
   - component: {fileID: 1267510964}
   - component: {fileID: 1267510966}
   - component: {fileID: 1267510967}
+  - component: {fileID: 1267510968}
   m_Layer: 0
   m_Name: '[Application Manager]'
   m_TagString: Untagged
@@ -5208,24 +5208,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1267510962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267510960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fdf289674dc04b4cab437c0820cdc7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  login:
-    user_name: 
-    score: 
-    date_time: 
-    logged_in: 
-  loginStatus: {fileID: 492252511}
 --- !u!114 &1267510963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5284,6 +5266,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e3b6b483a36ed468dc71a3d74e0ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1267510968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267510960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fdf289674dc04b4cab437c0820cdc7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  login:
+    user_name: 
+    score: 
+    date_time: 
+    logged_in: 
 --- !u!1 &1336515506
 GameObject:
   m_ObjectHideFlags: 0
