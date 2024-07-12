@@ -56,18 +56,13 @@ public class PlayerData : MonoBehaviour
     public string PlayerScore => PlayerPrefs.GetString("score");
     public string PlayerLoginDateTime => PlayerPrefs.GetString("login_date_time");
     public string PlayerLoggedIn => PlayerPrefs.GetString("logged_in");
-
     public PlayerDataWrapper PlayerData_Wrapper { get; private set; }
     public CollectItem Collect_Item { get; private set; }
-
-    
 
     Report report;
 
     [HideInInspector]
     public Login login;
-
-    // s[SerializeField] TMP_Text loginStatus;
 
     string _reportContent;
 
@@ -86,6 +81,7 @@ public class PlayerData : MonoBehaviour
     private void OnDisable()
     {
         OnPlayerData -= UpdatePlayerCollection;
+        
     }
 
    
@@ -100,6 +96,16 @@ public class PlayerData : MonoBehaviour
         report = ReadDataFromLocalFile();
         report.StartDateTime = DateTime.Now.ToString();
         Debug.Log($"File path \t {FilePath}");
+    }
+
+    private void OnApplicationQuit()
+    {
+        report.EndDateTime = DateTime.Now.ToString();
+        var timeDiff = (DateTime.Now - DateTime.Parse(report.StartDateTime));
+        report.PlayTime = timeDiff.ToString();
+        _reportContent = JsonConvert.SerializeObject(report);
+        SaveDataToLocalFile();
+        Debug.Log($"<color=orange>{nameof(OnApplicationQuit)}</color> \t Report {_reportContent}");
     }
 
     /// <summary>
@@ -125,7 +131,7 @@ public class PlayerData : MonoBehaviour
 
         _reportContent = JsonConvert.SerializeObject(report); // report.
         SaveDataToLocalFile();
-        Debug.Log($"");
+        Debug.Log($"Update player collection {_reportContent}");
     }
 
     /// <summary>

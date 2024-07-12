@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -58,28 +59,22 @@ public class Obstacle : MonoBehaviour
         if (collision.collider.tag == "Bottom Panel")
             return;
 
-
         hitCount++;
         switch (hitCount)
         {
             case 1:
-                // Code for hitCount == 1
                 image.color = new Color32(255, 204, 204, 255);
                 break;
             case 2:
-                // Code for hitCount == 2
                 image.color = new Color32(255, 154, 154, 255);
                 break;
             case 3:
-                // Code for hitCount == 3
                 image.color = new Color32(255, 103, 103, 255);
                 break;
             case 4:
-                // Code for hitCount == 4
                 image.color = new Color32(255, 52, 52, 255);
                 break;
             case 5:
-                // Code for hitCount == 5
                 image.color = new Color32(255, 0, 0, 255);
                 break;
             case 6:
@@ -110,7 +105,8 @@ public class Obstacle : MonoBehaviour
             if(rectTransform.anchoredPosition.y < -gameCanvasRectTransform.sizeDelta.y-100 )
             {
                 // rectTransform.anchoredPosition = new Vector2(initialXposition, 0);
-                rectTransform.anchoredPosition = new Vector2(Random.Range((-gameCanvasRectTransform.sizeDelta.x / 2 + rectTransform.sizeDelta.x / 3), gameCanvasRectTransform.sizeDelta.x / 2 - rectTransform.sizeDelta.x), 0);
+                rectTransform.anchoredPosition = new Vector2(UnityEngine.Random.Range((-gameCanvasRectTransform.sizeDelta.x / 2 + rectTransform.sizeDelta.x / 3), gameCanvasRectTransform.sizeDelta.x / 2 - rectTransform.sizeDelta.x), 0);
+                image.color = Color.white;
             }
             
         }
@@ -122,8 +118,9 @@ public class Obstacle : MonoBehaviour
     {
         PlayerData.OnPlayerData?.Invoke(ObstacleType.ToString());
         // this.gameObject.SetActive(false);
-        rectTransform.anchoredPosition = new Vector2(Random.Range((-gameCanvasRectTransform.sizeDelta.x / 2 + rectTransform.sizeDelta.x / 3), gameCanvasRectTransform.sizeDelta.x / 2 - rectTransform.sizeDelta.x), 0);
 
+        rectTransform.anchoredPosition = new Vector2(UnityEngine.Random.Range((-gameCanvasRectTransform.sizeDelta.x / 2 + rectTransform.sizeDelta.x / 3), gameCanvasRectTransform.sizeDelta.x / 2 - rectTransform.sizeDelta.x), 0);
+        // _timeTakenToDestroy = System.DateTime.Now - _initialtimeTaken;
     }
 
     void ResetPosition()

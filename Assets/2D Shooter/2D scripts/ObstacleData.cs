@@ -14,7 +14,7 @@ public class ObstacleData : MonoBehaviour
     [SerializeField] private bool[]             obstaclePositionAvailable = new bool[] { true, true, true, true };
     [SerializeField] private RectTransform[]    obstacles;
 
-  
+
 
     #region Monobehaviour callbacks
     private void OnEnable()
@@ -60,7 +60,6 @@ public class ObstacleData : MonoBehaviour
     void InstantiateObject(Transform transform = null)
     {
         transform.gameObject.SetActive(true);
-        
     }
 
     /// <summary>
@@ -73,7 +72,6 @@ public class ObstacleData : MonoBehaviour
             if(!obstacle.gameObject.activeInHierarchy)
             {
                 obstacle.gameObject.SetActive(true);
-                // obstacle.anchoredPosition = new Vector2(Random.Range(-(gameCanvas.sizeDelta.x / 2 + obstacle.sizeDelta.x / 2),gameCanvas.sizeDelta.x/2 + obstacle.sizeDelta.x/2),0);
                 break;
                 
             }

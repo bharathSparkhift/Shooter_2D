@@ -43,6 +43,8 @@ namespace shooter
 
         void Start()
         {
+            
+
             minXclamp = -(canvasRectTransform.rect.width - playerRectTransform.sizeDelta.x) / 2f;
             maxXclamp =  (canvasRectTransform.rect.width - playerRectTransform.sizeDelta.x) / 2f;
             
