@@ -31,12 +31,6 @@ public class PlayerData : MonoBehaviour
     class Report
     {
         public string UserName;
-        public List<Data> AllData  = new List<Data>();
-    }
-
-    [Serializable] 
-    class Data
-    {
         public string Score;
         public string PlayTime;
         public string StartDateTime;
@@ -46,6 +40,12 @@ public class PlayerData : MonoBehaviour
         {
             return $"score {Score} \n start date time {StartDateTime} \n play date time {PlayTime}";
         }
+    }
+
+    [Serializable] 
+    class Data
+    {
+        
     }
 
     [Serializable]
@@ -125,20 +125,18 @@ public class PlayerData : MonoBehaviour
         Collect_Item.Count += 1;
         PlayerData_Wrapper.CollectItems.Add(Collect_Item);
 
-        /*int value = 0;
-
-        cachedData = report.AllData[report.AllData.Count - 1];
-        if (!cachedData.ItemCollected.ContainsKey(obstacleName))
+        int value = 0;
+        if (!report.ItemCollected.ContainsKey(obstacleName))
         {
-            cachedData.ItemCollected.Add(obstacleName, 0);
+            report.ItemCollected.Add(obstacleName, 0);
         }
-
-        cachedData.ItemCollected.TryGetValue(obstacleName, out value);
+        report.ItemCollected.TryGetValue(obstacleName, out value);
         value += 1;
-        cachedData.ItemCollected[obstacleName] = value;
-        report.AllData[report.AllData.Count - 1] = cachedData;
+        report.ItemCollected[obstacleName] = value;
+        _reportContent = JsonConvert.SerializeObject(report); // report.
+        SaveDataToLocalFile();
 
-        _reportContent = JsonConvert.SerializeObject(report);*/
+     
 
         Debug.Log($"Update player collection {_reportContent}");
     }
@@ -149,8 +147,17 @@ public class PlayerData : MonoBehaviour
     /// <param name="data"></param>
     void SaveDataToLocalFile()
     {
-        File.WriteAllText(FilePath, _reportContent);
-        Debug.Log($"{nameof(SaveDataToLocalFile)}");
+        try
+        {
+            File.WriteAllText(FilePath, _reportContent);
+            Debug.Log($"{nameof(SaveDataToLocalFile)}");
+
+        }
+        catch (Exception ex)
+        {
+            Debug.Log($"<color=red>{ex.Message}</color>");
+        }
+        
     }
 
 
@@ -162,11 +169,20 @@ public class PlayerData : MonoBehaviour
         if (!File.Exists(FilePath))
         {
             // Initialize a new report
-            report = new Report
-            {
-                UserName = string.Empty,
-            };
-            AddDataToList();
+            report = new Report();
+            report.UserName = string.Empty;
+            report.Score = "0";
+            report.PlayTime = string.Empty;
+            report.StartDateTime = string.Empty;
+            report.ItemCollected = new Dictionary<string, int>();
+            report.ItemCollected.Add(Obstacle.Type.square.ToString(), 0);
+            report.ItemCollected.Add(Obstacle.Type.circle.ToString(), 0);
+            report.ItemCollected.Add(Obstacle.Type.triangle.ToString(), 0);
+            report.ItemCollected.Add(Obstacle.Type.diamond.ToString(), 0);
+
+            _reportContent = JsonConvert.SerializeObject(report);
+
+            SaveDataToLocalFile();
         }
         else
         {
@@ -193,19 +209,15 @@ public class PlayerData : MonoBehaviour
 
     void AddDataToList()
     {
-        report.AllData.Add(new Data()
-        {
-            Score = "0",
-            PlayTime = string.Empty,
-            StartDateTime = string.Empty,
-            ItemCollected = new Dictionary<string, int>
-            {
-                { Obstacle.Type.square.ToString(), 0 },
-                { Obstacle.Type.circle.ToString(), 0 },
-                { Obstacle.Type.triangle.ToString(), 0 },
-                { Obstacle.Type.diamond.ToString(), 0 }
-            }
-        });
+        report.Score = "0";
+        report.PlayTime = string.Empty;
+        report.StartDateTime = string.Empty;
+        report.ItemCollected = new Dictionary<string, int>();
+        report.ItemCollected.Add(Obstacle.Type.square.ToString(), 0);
+        report.ItemCollected.Add(Obstacle.Type.circle.ToString(), 0);
+        report.ItemCollected.Add(Obstacle.Type.triangle.ToString(), 0);
+        report.ItemCollected.Add(Obstacle.Type.diamond.ToString(), 0);
+        
         _reportContent = JsonConvert.SerializeObject(report);
         
         SaveDataToLocalFile();
