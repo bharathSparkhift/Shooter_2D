@@ -16,8 +16,7 @@ public class StartSceneManager : MonoBehaviour
     [SerializeField] GoogleSignInManager googleSignInManager;
     [SerializeField] string openURL = "https://google.com";
     [SerializeField] Animation redBoxAnimation;
-    [SerializeField] Transform mainCamera;
-    [SerializeField] Canvas loginCanvas;
+    // [SerializeField] Canvas loginCanvas;
 
     private DateTime _initialTime;
 
@@ -68,7 +67,9 @@ public class StartSceneManager : MonoBehaviour
         Debug.Log($"{nameof(SwitchGameScene)}");
 
         await Task.Delay(1000);
-        loginCanvas.gameObject.SetActive(false);   
+
+        StartSceneUiHandler.OnStartSceneUiHandler?.Invoke("false");
+        // loginCanvas.gameObject.SetActive(false);   
         
         SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive);
         Debug.Log($"<color=green>switching to the game scene...</color>");

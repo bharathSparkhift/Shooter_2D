@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UiHandler : MonoBehaviour
@@ -25,8 +26,9 @@ public class UiHandler : MonoBehaviour
     [HideInInspector]
     public CanvasType Canvas_Type;
 
-    [SerializeField] Transform currentCanvasTransform;
-    [SerializeField] Transform[] canvas;
+    //[SerializeField] Transform currentCanvasTransform;
+    //[SerializeField] GoogleSignInManager googleSignInManager;
+    // [SerializeField] Transform[] canvas;
    
 
     PlayerData _playerData;
@@ -34,7 +36,8 @@ public class UiHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentCanvasTransform = canvas[0];
+        //currentCanvasTransform = canvas[0];
+        //googleSignInManager = FindObjectOfType<GoogleSignInManager>();
     }
 
     private void OnEnable()
@@ -56,7 +59,7 @@ public class UiHandler : MonoBehaviour
     /// <param name="index"></param>
     void ToggleCanvas(int index)
     {
-        currentCanvasTransform.gameObject.SetActive(false);
+        /*currentCanvasTransform.gameObject.SetActive(false);
         switch (index)
         {
             case 0: // Login canvas
@@ -71,7 +74,7 @@ public class UiHandler : MonoBehaviour
                 currentCanvasTransform = canvas[2];
                 currentCanvasTransform.gameObject.SetActive(true);
                 break;
-        }
+        }*/
     }
 
     /// <summary>

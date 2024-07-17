@@ -4056,7 +4056,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1267510961}
   - component: {fileID: 1267510963}
-  - component: {fileID: 1267510964}
   - component: {fileID: 1267510966}
   - component: {fileID: 1267510967}
   - component: {fileID: 1267510968}
@@ -4095,22 +4094,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Canvas_Type: 0
-  currentCanvasTransform: {fileID: 0}
-  canvas: []
---- !u!114 &1267510964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267510960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85d7530c54651ac4fad3aa33f4ffde6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  status: {fileID: 492252511}
-  webClientId: 622482298564-rc3aa59ll2qgcatki6ggv47mplodul61.apps.googleusercontent.com
 --- !u!114 &1267510966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4124,6 +4107,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Difficult_Level>k__BackingField: 0
+  playerData: {fileID: 1267510968}
+  googleSignInManager: {fileID: 0}
 --- !u!114 &1267510967
 MonoBehaviour:
   m_ObjectHideFlags: 0

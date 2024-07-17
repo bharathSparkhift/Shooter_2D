@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     /// Defines the difficult level of the game.
     /// </summary>
     [field:SerializeField] public DifficultLevel Difficult_Level { get; private set; }
+    [SerializeField] PlayerData playerData;
+    [SerializeField] GoogleSignInManager googleSignInManager;
 
     public DifficultLevel GetDifficultLevel => Difficult_Level;
 
@@ -27,7 +29,8 @@ public class GameManager : MonoBehaviour
     #region Monobehaviour callbacks
     void Start()
     {
-        
+        googleSignInManager = FindObjectOfType<GoogleSignInManager>();
+        playerData.UpdatePlayerStartTime();
     }
 
     private void OnEnable()
@@ -47,7 +50,14 @@ public class GameManager : MonoBehaviour
         var timeSpent = DateTime.Now - _initialTime;
         Debug.Log($"Time spent {timeSpent}");
         LogHandler.OnLogHandler?.Invoke($"Time spent in {SceneManager.GetActiveScene().name.ToString()} scene for about {timeSpent.ToString()} on {DateTime.Now}");
-        SceneManager.LoadSceneAsync(1);
+        if (googleSignInManager != null)
+        {
+
+            googleSignInManager.OnSignOut();
+            playerData.UpdatePlayerEndTime();
+            StartSceneUiHandler.OnStartSceneUiHandler?.Invoke("true");
+            SceneManager.UnloadSceneAsync(2);
+        }
     }
 
     public void PauseGame()

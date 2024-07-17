@@ -115,13 +115,30 @@ public class PlayerData : MonoBehaviour
         {
             player = ReadDataFromLocalFile();
             player.UserName = username;
+            player.StartDateTime = DateTime.Now.ToString();
             _reportContent = JsonConvert.SerializeObject(player);
             SaveDataToLocalFile();
             Debug.Log($"{nameof(UpdatePlayerData)}");
         }
-            
+    }
+
+    public void UpdatePlayerStartTime()
+    {
+        
         
     }
+
+    public void UpdatePlayerEndTime()
+    {
+        player.EndDateTime = DateTime.Now.ToString();
+        // TimeSpan timeSpent = DateTime.Parse(player.StartDateTime) - DateTime.Parse(player.EndDateTime);
+        // player.PlayTime = timeSpent.ToString();
+        _reportContent = JsonConvert.SerializeObject(player);
+        SaveDataToLocalFile();
+    }
+
+
+
 
 
     /// <summary>
@@ -145,8 +162,8 @@ public class PlayerData : MonoBehaviour
             player.ItemCollected.TryGetValue(obstacleName, out value);
             value += 1;
             player.ItemCollected[obstacleName] = value;
-            _reportContent = JsonConvert.SerializeObject(player); // report.
-            SaveDataToLocalFile();
+            //_reportContent = JsonConvert.SerializeObject(player); // report.
+            // SaveDataToLocalFile();
 
             Debug.Log($"Update player collection {_reportContent}");
         }
@@ -202,13 +219,11 @@ public class PlayerData : MonoBehaviour
         {
             try
             {
-                
                 // Read data from the existing file
                 string fileContent = File.ReadAllText(FilePath);
                 if (!string.IsNullOrEmpty(fileContent))
                 {
                     player = JsonConvert.DeserializeObject<Player>(fileContent);
-
                 }
             }
             catch (IOException ex)
@@ -219,24 +234,4 @@ public class PlayerData : MonoBehaviour
         }
         return player;
     }
-
-    void AddDataToList()
-    {
-        player.Score = "0";
-        player.PlayTime = string.Empty;
-        player.StartDateTime = string.Empty;
-        player.ItemCollected = new Dictionary<string, int>();
-        player.ItemCollected.Add(Obstacle.Type.square.ToString(), 0);
-        player.ItemCollected.Add(Obstacle.Type.circle.ToString(), 0);
-        player.ItemCollected.Add(Obstacle.Type.triangle.ToString(), 0);
-        player.ItemCollected.Add(Obstacle.Type.diamond.ToString(), 0);
-        
-        _reportContent = JsonConvert.SerializeObject(player);
-        
-        SaveDataToLocalFile();
-        
-    }
-
-    
-
 }

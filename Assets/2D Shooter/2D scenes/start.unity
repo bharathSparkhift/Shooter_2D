@@ -1510,6 +1510,7 @@ GameObject:
   - component: {fileID: 2017335295}
   - component: {fileID: 2017335296}
   - component: {fileID: 2017335297}
+  - component: {fileID: 2017335298}
   m_Layer: 0
   m_Name: '[scripts manager]'
   m_TagString: Untagged
@@ -1532,8 +1533,6 @@ MonoBehaviour:
   googleSignInManager: {fileID: 2017335297}
   openURL: https://google.com
   redBoxAnimation: {fileID: 779530143}
-  mainCamera: {fileID: 1824926668}
-  loginCanvas: {fileID: 1832527493}
 --- !u!4 &2017335294
 Transform:
   m_ObjectHideFlags: 0
@@ -1592,6 +1591,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statusText: {fileID: 157309106}
   webClientId: 506862426438-ga6qdb9jupue5eice3ud3lngp73to802.apps.googleusercontent.com
+--- !u!114 &2017335298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017335292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee248273869bdb478f7f3c2a35545dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 1832527494}
 --- !u!1 &2054932574
 GameObject:
   m_ObjectHideFlags: 0
