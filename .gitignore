@@ -79,3 +79,8 @@ crashlytics-build.properties
 /[Aa]ssets/Plugins.meta
 /[Aa]ssets/google-services.json
 /[Aa]ssets/google-services.json.meta
+/[Aa]ssets/Firebase/*
+/[Aa]ssets/GoogleSignIn/*
+/[Aa]ssets/ExternalDependencyManager/*
+/[Aa]ssets/Unity-Logs-Viewer/*
+/[Aa]ssets/TextMesh Pro/*

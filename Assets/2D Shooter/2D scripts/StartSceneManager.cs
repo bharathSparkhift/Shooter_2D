@@ -1,3 +1,4 @@
+using SignInSample;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ public class StartSceneManager : MonoBehaviour
     public delegate void StartSceneManagerDelegate();
     public static StartSceneManagerDelegate OnStartSceneManager;
 
+    [SerializeField] SigninSampleScript signinSampleScript;
     [SerializeField] string openURL = "https://google.com";
     [SerializeField] Animation redBoxAnimation;
 
@@ -60,8 +62,9 @@ public class StartSceneManager : MonoBehaviour
 
     async void SwitchGameScene()
     {
+        signinSampleScript.OnSignIn();
         await Task.Delay(2000);
-        SceneManager.LoadSceneAsync(2);
+        // SceneManager.LoadSceneAsync(2);
         Debug.Log($"<color=green>switching to the game scene...</color>");
     }
 
