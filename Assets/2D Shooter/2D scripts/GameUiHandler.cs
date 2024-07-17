@@ -6,7 +6,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UiHandler : MonoBehaviour
+
+/// <summary>
+/// Not in use of now.
+/// </summary>
+public class GameUiHandler : MonoBehaviour
 {
 
 
@@ -77,16 +81,4 @@ public class UiHandler : MonoBehaviour
         }*/
     }
 
-    /// <summary>
-    /// Invoke this method on button click
-    /// </summary>
-    public void LoginOnButtonClick()
-    {
-        
-    }
-
-    public void LogoutOnButtonClick()
-    {
-        
-    }
 }

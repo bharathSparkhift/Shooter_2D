@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
     public enum DifficultLevel
     {
         Easy,
@@ -41,6 +40,9 @@ public class GameManager : MonoBehaviour
 
 
     #endregion
+
+
+
 
     /// <summary>
     /// Load start scene on button click

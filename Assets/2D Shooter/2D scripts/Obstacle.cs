@@ -79,7 +79,7 @@ public class Obstacle : MonoBehaviour
                 break;
             case 6:
                 hitCount = 0;
-                DisableObject();
+                ResetObstacle();
                 image.color = Color.white;
                 break;
         }
@@ -114,18 +114,19 @@ public class Obstacle : MonoBehaviour
     #endregion
 
 
-    void DisableObject()
+    void ResetObstacle()
     {
+        // Vibrate
+        Handheld.Vibrate();
+
+        // Update Playerdata
         PlayerData.OnPlayerData?.Invoke(null,ObstacleType.ToString());
-        // this.gameObject.SetActive(false);
-
+        
+        // Reset the Y anchoredPosition
         rectTransform.anchoredPosition = new Vector2(UnityEngine.Random.Range((-gameCanvasRectTransform.sizeDelta.x / 2 + rectTransform.sizeDelta.x / 3), gameCanvasRectTransform.sizeDelta.x / 2 - rectTransform.sizeDelta.x), 0);
-        // _timeTakenToDestroy = System.DateTime.Now - _initialtimeTaken;
+        
     }
 
-    void ResetPosition()
-    {
-        // rectTransform.anchoredPosition = new Vector2(Random.Range(-490f, 490f), 0);
-    }
+ 
 
 }
