@@ -66,8 +66,10 @@ public class StartSceneManager : MonoBehaviour
     {
         // googleSignInManager.OnSignIn();
         Debug.Log($"{nameof(SwitchGameScene)}");
+
         await Task.Delay(1000);
         loginCanvas.gameObject.SetActive(false);   
+        
         SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive);
         Debug.Log($"<color=green>switching to the game scene...</color>");
     }

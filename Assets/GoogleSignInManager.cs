@@ -97,8 +97,10 @@ public class GoogleSignInManager : MonoBehaviour
         else
         {
             AddStatusText("Welcome: " + task.Result.DisplayName + "!");
-            // googleSignInCompletion.SetResult(JsonUtility.ToJson(task.Result));
+            Debug.Log($"{nameof(OnAuthenticationFinished)} \t Email {task.Result.Email}");
+            PlayerData.OnPlayerData?.Invoke(task.Result.Email, null);
             StartSceneManager.OnStartSceneManager?.Invoke();
+            
         }
     }
 

@@ -25,9 +25,6 @@ public class UiHandler : MonoBehaviour
     [HideInInspector]
     public CanvasType Canvas_Type;
 
-    
-
-    [SerializeField] Button loginButton;
     [SerializeField] Transform currentCanvasTransform;
     [SerializeField] Transform[] canvas;
    

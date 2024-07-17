@@ -4095,12 +4095,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Canvas_Type: 0
-  loginButton: {fileID: 0}
   currentCanvasTransform: {fileID: 0}
-  canvas:
-  - {fileID: 0}
-  - {fileID: 367190098}
-  - {fileID: 0}
+  canvas: []
 --- !u!114 &1267510964
 MonoBehaviour:
   m_ObjectHideFlags: 0

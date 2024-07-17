@@ -24,11 +24,11 @@ public class CollectItem
 public class PlayerData : MonoBehaviour
 {
 
-    public delegate void PlayerDataDelegate(string name);
+    public delegate void PlayerDataDelegate(string userName, string collectableItem);
     public static PlayerDataDelegate OnPlayerData;
 
     [Serializable]
-    class Report
+    class Player
     {
         public string UserName;
         public string Score;
@@ -57,7 +57,7 @@ public class PlayerData : MonoBehaviour
         public string logged_in;
     }
 
-    public string FilePath => Application.persistentDataPath + "/Shooter2D.json";
+    public string FilePath => Application.persistentDataPath + "/Shooter2D.txt";
     public string PlayerUserName => PlayerPrefs.GetString("user_name");
     public string PlayerScore => PlayerPrefs.GetString("score");
     public string PlayerLoginDateTime => PlayerPrefs.GetString("login_date_time");
@@ -65,80 +65,94 @@ public class PlayerData : MonoBehaviour
     public PlayerDataWrapper PlayerData_Wrapper { get; private set; }
     public CollectItem Collect_Item { get; private set; }
 
-    Report report;
-
-    Data cachedData;
+    Player player;
 
     [HideInInspector]
     public Login login;
 
     string _reportContent;
 
-    private void Awake()
-    {
-        
-    }
+
 
     private void OnEnable()
     {
+        OnPlayerData += UpdatePlayerData;
         OnPlayerData += UpdatePlayerCollection;
+        
     }
-
 
 
     private void OnDisable()
     {
+        OnPlayerData -= UpdatePlayerData;
         OnPlayerData -= UpdatePlayerCollection;
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        report = new Report();
-        cachedData = new Data();
+        player = new Player();
         login = new Login();
         PlayerData_Wrapper = new PlayerDataWrapper();
         Collect_Item = new CollectItem();
-        report = ReadDataFromLocalFile();
-        //report.StartDateTime = DateTime.Now.ToString();
+        player = ReadDataFromLocalFile();
+       
         Debug.Log($"File path \t {FilePath}");
     }
 
     private void OnApplicationQuit()
     {
-        //report.EndDateTime = DateTime.Now.ToString();
-        //var timeDiff = (DateTime.Now - DateTime.Parse(report.StartDateTime));
-        //report.PlayTime = timeDiff.ToString();
-        _reportContent = JsonConvert.SerializeObject(report, Formatting.Indented);
+
+        _reportContent = JsonConvert.SerializeObject(player, Formatting.Indented);
         SaveDataToLocalFile();
         Debug.Log($"<color=orange>{nameof(OnApplicationQuit)}</color> \t Report {_reportContent}");
     }
+
+    public void UpdatePlayerData(string username, string obstacleName)
+    {
+        if (!string.IsNullOrEmpty(username))
+        {
+            player = ReadDataFromLocalFile();
+            player.UserName = username;
+            _reportContent = JsonConvert.SerializeObject(player);
+            SaveDataToLocalFile();
+            Debug.Log($"{nameof(UpdatePlayerData)}");
+        }
+            
+        
+    }
+
 
     /// <summary>
     /// Update Player collected items to the dictionary.
     /// Save the details in the local json file
     /// </summary>
     /// <param name="obstacleName"></param>
-    void UpdatePlayerCollection(string obstacleName)
+    void UpdatePlayerCollection(string userName, string obstacleName)
     {
-        Collect_Item.Name = obstacleName;
-        Collect_Item.Count += 1;
-        PlayerData_Wrapper.CollectItems.Add(Collect_Item);
-
-        int value = 0;
-        if (!report.ItemCollected.ContainsKey(obstacleName))
+        if (!string.IsNullOrEmpty(obstacleName))
         {
-            report.ItemCollected.Add(obstacleName, 0);
+            Collect_Item.Name = obstacleName;
+            Collect_Item.Count += 1;
+            PlayerData_Wrapper.CollectItems.Add(Collect_Item);
+
+            int value = 0;
+            if (!player.ItemCollected.ContainsKey(obstacleName))
+            {
+                player.ItemCollected.Add(obstacleName, 0);
+            }
+            player.ItemCollected.TryGetValue(obstacleName, out value);
+            value += 1;
+            player.ItemCollected[obstacleName] = value;
+            _reportContent = JsonConvert.SerializeObject(player); // report.
+            SaveDataToLocalFile();
+
+            Debug.Log($"Update player collection {_reportContent}");
         }
-        report.ItemCollected.TryGetValue(obstacleName, out value);
-        value += 1;
-        report.ItemCollected[obstacleName] = value;
-        _reportContent = JsonConvert.SerializeObject(report); // report.
-        SaveDataToLocalFile();
 
-     
 
-        Debug.Log($"Update player collection {_reportContent}");
+        
     }
 
     /// <summary>
@@ -164,23 +178,23 @@ public class PlayerData : MonoBehaviour
     /// <summary>
     /// Read the data from the Local JSON file.
     /// </summary>
-    Report ReadDataFromLocalFile()
+    Player ReadDataFromLocalFile()
     {
         if (!File.Exists(FilePath))
         {
             // Initialize a new report
-            report = new Report();
-            report.UserName = string.Empty;
-            report.Score = "0";
-            report.PlayTime = string.Empty;
-            report.StartDateTime = string.Empty;
-            report.ItemCollected = new Dictionary<string, int>();
-            report.ItemCollected.Add(Obstacle.Type.square.ToString(), 0);
-            report.ItemCollected.Add(Obstacle.Type.circle.ToString(), 0);
-            report.ItemCollected.Add(Obstacle.Type.triangle.ToString(), 0);
-            report.ItemCollected.Add(Obstacle.Type.diamond.ToString(), 0);
+            player = new Player();
+            player.UserName = string.Empty;
+            player.Score = "0";
+            player.PlayTime = string.Empty;
+            player.StartDateTime = string.Empty;
+            player.ItemCollected = new Dictionary<string, int>();
+            player.ItemCollected.Add(Obstacle.Type.square.ToString(), 0);
+            player.ItemCollected.Add(Obstacle.Type.circle.ToString(), 0);
+            player.ItemCollected.Add(Obstacle.Type.triangle.ToString(), 0);
+            player.ItemCollected.Add(Obstacle.Type.diamond.ToString(), 0);
 
-            _reportContent = JsonConvert.SerializeObject(report);
+            _reportContent = JsonConvert.SerializeObject(player);
 
             SaveDataToLocalFile();
         }
@@ -193,43 +207,36 @@ public class PlayerData : MonoBehaviour
                 string fileContent = File.ReadAllText(FilePath);
                 if (!string.IsNullOrEmpty(fileContent))
                 {
-                    report = JsonConvert.DeserializeObject<Report>(fileContent);
-                    // Add data to the list
-                    // AddDataToList();
+                    player = JsonConvert.DeserializeObject<Player>(fileContent);
+
                 }
             }
             catch (IOException ex)
             {
                 Debug.LogError("IOException: " + ex.Message);
             }
-            Debug.Log($"{nameof(ReadDataFromLocalFile)} \n File path {FilePath} \n {JsonConvert.SerializeObject(report)}");
+            Debug.Log($"{nameof(ReadDataFromLocalFile)} \n File path {FilePath} \n {JsonConvert.SerializeObject(player)}");
         }
-        return report;
+        return player;
     }
 
     void AddDataToList()
     {
-        report.Score = "0";
-        report.PlayTime = string.Empty;
-        report.StartDateTime = string.Empty;
-        report.ItemCollected = new Dictionary<string, int>();
-        report.ItemCollected.Add(Obstacle.Type.square.ToString(), 0);
-        report.ItemCollected.Add(Obstacle.Type.circle.ToString(), 0);
-        report.ItemCollected.Add(Obstacle.Type.triangle.ToString(), 0);
-        report.ItemCollected.Add(Obstacle.Type.diamond.ToString(), 0);
+        player.Score = "0";
+        player.PlayTime = string.Empty;
+        player.StartDateTime = string.Empty;
+        player.ItemCollected = new Dictionary<string, int>();
+        player.ItemCollected.Add(Obstacle.Type.square.ToString(), 0);
+        player.ItemCollected.Add(Obstacle.Type.circle.ToString(), 0);
+        player.ItemCollected.Add(Obstacle.Type.triangle.ToString(), 0);
+        player.ItemCollected.Add(Obstacle.Type.diamond.ToString(), 0);
         
-        _reportContent = JsonConvert.SerializeObject(report);
+        _reportContent = JsonConvert.SerializeObject(player);
         
         SaveDataToLocalFile();
         
     }
 
-    public void LoginOnButtonClick(string username)
-    {
-        report = ReadDataFromLocalFile();
-        report.UserName = username;
-        SaveDataToLocalFile();
-        // StartSceneManager.OnStartSceneManager?.Invoke();
-    }
+    
 
 }

@@ -116,7 +116,7 @@ public class Obstacle : MonoBehaviour
 
     void DisableObject()
     {
-        PlayerData.OnPlayerData?.Invoke(ObstacleType.ToString());
+        PlayerData.OnPlayerData?.Invoke(null,ObstacleType.ToString());
         // this.gameObject.SetActive(false);
 
         rectTransform.anchoredPosition = new Vector2(UnityEngine.Random.Range((-gameCanvasRectTransform.sizeDelta.x / 2 + rectTransform.sizeDelta.x / 3), gameCanvasRectTransform.sizeDelta.x / 2 - rectTransform.sizeDelta.x), 0);
