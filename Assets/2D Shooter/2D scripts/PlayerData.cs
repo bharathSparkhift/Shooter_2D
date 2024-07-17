@@ -229,7 +229,7 @@ public class PlayerData : MonoBehaviour
         report = ReadDataFromLocalFile();
         report.UserName = username;
         SaveDataToLocalFile();
-        StartSceneManager.OnStartSceneManager?.Invoke();
+        // StartSceneManager.OnStartSceneManager?.Invoke();
     }
 
 }

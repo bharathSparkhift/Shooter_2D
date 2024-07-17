@@ -13,9 +13,11 @@ public class StartSceneManager : MonoBehaviour
     public delegate void StartSceneManagerDelegate();
     public static StartSceneManagerDelegate OnStartSceneManager;
 
-    [SerializeField] SigninSampleScript signinSampleScript;
+    [SerializeField] GoogleSignInManager googleSignInManager;
     [SerializeField] string openURL = "https://google.com";
     [SerializeField] Animation redBoxAnimation;
+    [SerializeField] Transform mainCamera;
+    [SerializeField] Canvas loginCanvas;
 
     private DateTime _initialTime;
 
@@ -62,9 +64,11 @@ public class StartSceneManager : MonoBehaviour
 
     async void SwitchGameScene()
     {
-        signinSampleScript.OnSignIn();
-        await Task.Delay(2000);
-        // SceneManager.LoadSceneAsync(2);
+        // googleSignInManager.OnSignIn();
+        Debug.Log($"{nameof(SwitchGameScene)}");
+        await Task.Delay(1000);
+        loginCanvas.gameObject.SetActive(false);   
+        SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive);
         Debug.Log($"<color=green>switching to the game scene...</color>");
     }
 
