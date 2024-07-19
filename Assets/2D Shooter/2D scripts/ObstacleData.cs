@@ -30,40 +30,18 @@ public class ObstacleData : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Enable the obstacle one after the other after every two seconds
         InvokeRepeating(nameof(EnableObstacle), 0, 2);
     }
 
-    private void Update()
-    {
-  
-
-    }
+ 
     #endregion
 
 
-    bool AreRectTransformsOverlapping(RectTransform obstaclePosition, RectTransform obstacle)
-    {
-        // Get the corners of the rectangles in world space
-        Vector3[] corners1 = new Vector3[4];
-        Vector3[] corners2 = new Vector3[4];
-
-        obstaclePosition.GetWorldCorners(corners1);
-        obstacle.GetWorldCorners(corners2);
-
-        // Check for overlap
-        Rect rect1 = new Rect(corners1[0], corners1[2] - corners1[0]);
-        Rect rect2 = new Rect(corners2[0], corners2[2] - corners2[0]);
-
-        return rect1.Overlaps(rect2);
-    }
-
-    void InstantiateObject(Transform transform = null)
-    {
-        transform.gameObject.SetActive(true);
-    }
+    
 
     /// <summary>
-    /// 
+    /// Loop through the obstacles and enable 
     /// </summary>
     void EnableObstacle()
     {

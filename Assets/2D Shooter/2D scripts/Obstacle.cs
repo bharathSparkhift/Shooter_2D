@@ -29,7 +29,7 @@ public class Obstacle : MonoBehaviour
     [SerializeField] int hitCount = 0;
     [SerializeField] int maxHitCount = 5;
     [SerializeField] float fallingSpeed = 2f;
-    [SerializeField] float initialXposition;
+    //[SerializeField] float initialXposition;
     [SerializeField] Image image;
     [SerializeField] bool enableGravity;
 
@@ -39,20 +39,14 @@ public class Obstacle : MonoBehaviour
 
     private void Awake()
     {
-        _gameManager = new GameManager();
+        
     }
 
     void Start()
     {
-        initialXposition = rectTransform.anchoredPosition.x;
+        _gameManager = new GameManager();
     }
 
-    private void OnEnable()
-    {
-        // ResetPosition();
-        // initialXposition = rectTransform.anchoredPosition.x;
-
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -78,23 +72,16 @@ public class Obstacle : MonoBehaviour
                 image.color = new Color32(255, 0, 0, 255);
                 break;
             case 6:
-                hitCount = 0;
+                // Vibrate
+                Handheld.Vibrate();
+
+                // Update Playerdata
+                PlayerData.OnPlayerData?.Invoke(null, ObstacleType.ToString());
+
                 ResetObstacle();
-                image.color = Color.white;
                 break;
         }
         
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        // rectTransform.anchoredPosition = new Vector2(initialXposition, 0);
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        // DisableObject();
-
     }
 
     private void Update()
@@ -104,9 +91,8 @@ public class Obstacle : MonoBehaviour
             rectTransform.anchoredPosition += new Vector2(0, -Time.deltaTime * fallingSpeed); 
             if(rectTransform.anchoredPosition.y < -gameCanvasRectTransform.sizeDelta.y-100 )
             {
-                // rectTransform.anchoredPosition = new Vector2(initialXposition, 0);
-                rectTransform.anchoredPosition = new Vector2(UnityEngine.Random.Range((-gameCanvasRectTransform.sizeDelta.x / 2 + rectTransform.sizeDelta.x / 3), gameCanvasRectTransform.sizeDelta.x / 2 - rectTransform.sizeDelta.x), 0);
-                image.color = Color.white;
+                ResetObstacle();
+           
             }
             
         }
@@ -116,15 +102,16 @@ public class Obstacle : MonoBehaviour
 
     void ResetObstacle()
     {
-        // Vibrate
-        Handheld.Vibrate();
-
-        // Update Playerdata
-        PlayerData.OnPlayerData?.Invoke(null,ObstacleType.ToString());
+        
         
         // Reset the Y anchoredPosition
         rectTransform.anchoredPosition = new Vector2(UnityEngine.Random.Range((-gameCanvasRectTransform.sizeDelta.x / 2 + rectTransform.sizeDelta.x / 3), gameCanvasRectTransform.sizeDelta.x / 2 - rectTransform.sizeDelta.x), 0);
-        
+
+        // Reset the color to white
+        image.color = Color.white;
+
+        // Reset the hit count to zero
+        hitCount = 0;
     }
 
  

@@ -50,7 +50,6 @@ public class StartSceneManager : MonoBehaviour
         var timeSpent = DateTime.Now - _initialTime;
         Debug.Log($"Time spent {timeSpent}");
         LogHandler.OnLogHandler?.Invoke($"Time spent in {SceneManager.GetActiveScene().name.ToString()} scene for about {timeSpent.ToString()} on {DateTime.Now}");
-        // SceneManager.LoadSceneAsync(2);
     }
 
     /// <summary>
@@ -63,14 +62,8 @@ public class StartSceneManager : MonoBehaviour
 
     async void SwitchGameScene()
     {
-        // googleSignInManager.OnSignIn();
-        Debug.Log($"{nameof(SwitchGameScene)}");
-
-        await Task.Delay(1000);
-
-        StartSceneUiHandler.OnStartSceneUiHandler?.Invoke("false");
-        // loginCanvas.gameObject.SetActive(false);   
-        
+        await Task.Delay(500);
+        StartSceneUiHandler.OnStartSceneUiHandler?.Invoke("false"); 
         SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive);
         Debug.Log($"<color=green>switching to the game scene...</color>");
     }

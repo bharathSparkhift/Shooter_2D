@@ -27,8 +27,12 @@ public class PlayerData : MonoBehaviour
     public delegate void PlayerDataDelegate(string userName, string collectableItem);
     public static PlayerDataDelegate OnPlayerData;
 
+
+    /// <summary>
+    /// Player class/model
+    /// </summary>
     [Serializable]
-    class Player
+    public class Player
     {
         public string UserName;
         public string Score;
@@ -42,11 +46,7 @@ public class PlayerData : MonoBehaviour
         }
     }
 
-    [Serializable] 
-    class Data
-    {
-        
-    }
+   
 
     [Serializable]
     public class Login
@@ -58,10 +58,6 @@ public class PlayerData : MonoBehaviour
     }
 
     public string FilePath => Application.persistentDataPath + "/Shooter2D.txt";
-    public string PlayerUserName => PlayerPrefs.GetString("user_name");
-    public string PlayerScore => PlayerPrefs.GetString("score");
-    public string PlayerLoginDateTime => PlayerPrefs.GetString("login_date_time");
-    public string PlayerLoggedIn => PlayerPrefs.GetString("logged_in");
     public PlayerDataWrapper PlayerData_Wrapper { get; private set; }
     public CollectItem Collect_Item { get; private set; }
 
@@ -113,27 +109,28 @@ public class PlayerData : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(username))
         {
+            // Read data from the local file
             player = ReadDataFromLocalFile();
+            // Update the user name from the sign in details
             player.UserName = username;
+            // Update start date time of the game
             player.StartDateTime = DateTime.Now.ToString();
+            // Serialize the Player data
             _reportContent = JsonConvert.SerializeObject(player);
+            // Save the data to the local file
             SaveDataToLocalFile();
             Debug.Log($"{nameof(UpdatePlayerData)}");
         }
     }
 
-    public void UpdatePlayerStartTime()
-    {
-        
-        
-    }
 
     public void UpdatePlayerEndTime()
     {
+        // Update end date time
         player.EndDateTime = DateTime.Now.ToString();
-        // TimeSpan timeSpent = DateTime.Parse(player.StartDateTime) - DateTime.Parse(player.EndDateTime);
-        // player.PlayTime = timeSpent.ToString();
+        // Serialize the Player data
         _reportContent = JsonConvert.SerializeObject(player);
+        // Save the data to the local file
         SaveDataToLocalFile();
     }
 
@@ -148,13 +145,16 @@ public class PlayerData : MonoBehaviour
     /// <param name="obstacleName"></param>
     void UpdatePlayerCollection(string userName, string obstacleName)
     {
+        // Check if string is not empty or not null
         if (!string.IsNullOrEmpty(obstacleName))
         {
+            // Update the collect item details
             Collect_Item.Name = obstacleName;
             Collect_Item.Count += 1;
             PlayerData_Wrapper.CollectItems.Add(Collect_Item);
 
             int value = 0;
+            // check if the obstacle name 
             if (!player.ItemCollected.ContainsKey(obstacleName))
             {
                 player.ItemCollected.Add(obstacleName, 0);
@@ -162,14 +162,12 @@ public class PlayerData : MonoBehaviour
             player.ItemCollected.TryGetValue(obstacleName, out value);
             value += 1;
             player.ItemCollected[obstacleName] = value;
-            //_reportContent = JsonConvert.SerializeObject(player); // report.
-            // SaveDataToLocalFile();
-
+            // Serialize the Player data
+            _reportContent = JsonConvert.SerializeObject(player);
+            // Save the data to the local file
+            SaveDataToLocalFile();
             Debug.Log($"Update player collection {_reportContent}");
         }
-
-
-        
     }
 
     /// <summary>
@@ -195,7 +193,7 @@ public class PlayerData : MonoBehaviour
     /// <summary>
     /// Read the data from the Local JSON file.
     /// </summary>
-    Player ReadDataFromLocalFile()
+    public Player ReadDataFromLocalFile()
     {
         if (!File.Exists(FilePath))
         {

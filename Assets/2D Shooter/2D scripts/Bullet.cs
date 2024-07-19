@@ -5,16 +5,15 @@ using UnityEngine.XR;
 
 public class Bullet : MonoBehaviour
 {
+    #region Monobehaviour callbacks
     [SerializeField] RectTransform gameCanvas;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] RectTransform rectTransform;
     [SerializeField] float forceSpeed = 2f;
     [SerializeField] float disableDelay = 4f;
-    
+    #endregion
 
 
-
-    // Start is called before the first frame update
     void Start()
     {
         
@@ -30,11 +29,9 @@ public class Bullet : MonoBehaviour
   
     private void OnEnable()
     {
-        
         Vector2 upwardWorldDirection = transform.TransformDirection(transform.up);
         rb.AddForce(upwardWorldDirection * forceSpeed, ForceMode2D.Impulse);
         rectTransform.localRotation = Quaternion.Euler(0, 0, 0);
-
     }
 
     void DisableGameObject()

@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [field:SerializeField] public DifficultLevel Difficult_Level { get; private set; }
     [SerializeField] PlayerData playerData;
     [SerializeField] GoogleSignInManager googleSignInManager;
+    [SerializeField] PlayerStatsUi playerStatsUi;
 
     public DifficultLevel GetDifficultLevel => Difficult_Level;
 
@@ -29,7 +30,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         googleSignInManager = FindObjectOfType<GoogleSignInManager>();
-        playerData.UpdatePlayerStartTime();
     }
 
     private void OnEnable()
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PauseGame()
+    public void TogglePlayerStatsUi()
     {
         if(Time.timeScale != 0)
         {
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 1;
         }
-        Debug.Log($"{nameof(PauseGame)}");
+        Debug.Log($"{nameof(TogglePlayerStatsUi)}");
         
     }
 
